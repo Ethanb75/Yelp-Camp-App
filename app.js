@@ -17,7 +17,8 @@ var commentRoutes = require("./routes/comments"),
     
 
 //dev db is local, production db is an mlab server
-mongoose.connect(process.env.DATABASEURL);
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v4";
+mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

@@ -1,11 +1,13 @@
 <% include ../partials/header %>
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center">Add New Comment to <%= campground.name %></h1>
+        <h1 style="text-align: center">Comment on: "<%= campground.name %>"</h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="comment[text]" placeholder="text">
+                    <!--<input class="form-control" type="text" name="comment[text]" placeholder="text">-->
+                    <label for="comment[text]">Comment on the trail / camp</label>
+                    <textarea class="form-control" type="text" name="comment[text]" placeholder="Comment body" rows="3" required spellcheck></textarea>
                 </div>
               
                 <div class="form-group">

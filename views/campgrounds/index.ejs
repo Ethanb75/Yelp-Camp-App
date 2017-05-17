@@ -1,30 +1,67 @@
 <% include ../partials/header %> 
  <div class="container">
-     <header class="jumbotron">
-         <div class="container">
-             <h1>Welcome To YelpCamp!</h1>
-             <p>View our hand-picked campgrounds from all over the world</p>
-             <p>
-                <a class="btn btn-primary btn-large" href="/campgrounds/new">Add New Campground</a>
-             </p>
-         </div>
-     </header>
-     
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+     <p>
+         <h3>A place for campers, hikers, and wildfolk</h3>
+         <em class="inline"> " <span id="oneLiner" class="hiding">Dummy text</span> " </em>
+         <span class="right">View: <i class="fa fa-th-large" aria-hidden="true"></i> Block | <i class="fa fa-list" aria-hidden="true"></i> List</span>
+     </p>
+     <hr class="thick_hr">
+     <div class="row" style="display:flex; flex-wrap: wrap;">
         <% campgrounds.forEach(function(campground){ %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                   <img src="<%= campground.image %>">
-                   <div class="caption">
-                       <h4><%= campground.name %></h4>
-                   </div>
-                   <p>
-                       <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
-                   </p>
+            
+                <div class="col-md-3 col-sm-6 flexn">
+                    <div class="thumbnail card card-index" data-location="/campgrounds/<%= campground._id %>">
+                       <img src="<%= campground.image %>">
+                       <div class="caption text-center">
+                           <h4><%= campground.name %></h4>
+                           <!--<em>$ <%= campground.price %> / <i class="fa fa-moon-o" aria-hidden="true"></i></em>-->
+                       </div>
+                       <!--<a href="/campgrounds/<%= campground._id %>"></a>-->
+                       <div id="area" class="info container-fluid">
+                           <div class="row">
+                               <div class="item1 col-xs-6"><em>$ <%= campground.price %> / <i class="fa fa-moon-o" aria-hidden="true"></i></em></div>
+                               <div class="item2 col-xs-6"></div>
+                           </div>
+                       </div>
+                    </div>
                 </div>
-            </div>
         <% }); %>
     </div>
+    
+    <!-- button to add a new camp -->
+    <a href="/campgrounds/new"><i id="new_camp"  class="fa fa-plus" aria-hidden="true"></i></a>
 </div>
 
+<script type="text/javascript">
+    const cards = document.getElementsByClassName('card');
+    const oneLiners = [
+          "Czech out these great camps!",
+          "Camps and trails out my ears!",
+          "Camps so good you'll forget the granola",
+          "Camp'n makes the world go 'round",
+          "My legs hurt already!"
+    ];
+    
+    //this function takes an id and injects it with a fresh oneLiner!
+    const oneLiner = function(IdName){
+      let oneLiner = document.getElementById(IdName);
+      let seed = Math.floor(Math.random() * oneLiners.length);
+      oneLiner.innerHTML = oneLiners[seed];
+      console.log('seed: ', seed);
+      oneLiner.classList.toggle('hiding');
+    };
+    
+    //add event listeners for every card available and load a fresh oneliner and inject it
+    window.onload = function() {
+        for(let i = 0; i < cards.length; i++) {
+            cards[i].onclick = function() {
+                window.location = this.getAttribute('data-location');
+            }
+        };
+        
+        //init oneliner
+        oneLiner("oneLiner");
+    };
+    
+</script>
 <% include ../partials/footer %>
